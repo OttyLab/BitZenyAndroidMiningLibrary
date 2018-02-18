@@ -14,9 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "BitZenyMiner";
+    private static final int LOG_LINES = 1000;
 
     private EditText editTextServer;
     private EditText editTextUser;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewLog;
 
     private boolean running;
+    private BlockingQueue<String> logs = new LinkedBlockingQueue<>(LOG_LINES);
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -42,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             MainActivity activity = this.activity.get();
             if (activity != null) {
-                String result = activity.textViewLog.getText() + msg.getData().getString("msg");
-                activity.textViewLog.setText(result);
+                String logs = Utils.rotateStringQueue(activity.logs, msg.getData().getString("msg"));
+                activity.textViewLog.setText(logs.toString());
             }
         }
     }
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         editTextUser.setText(pref.getString("user", null));
         editTextPassword.setText(pref.getString("password", null));
     }
+
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
