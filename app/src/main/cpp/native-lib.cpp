@@ -72,6 +72,16 @@ Java_com_example_ottylab_bitzenyminer_MainActivity_initMining(
 }
 
 extern "C"
+JNIEXPORT jboolean
+JNICALL
+Java_com_example_ottylab_bitzenyminer_MainActivity_isMiningRunning(
+        JNIEnv *env,
+        jobject /* this */) {
+    Log("isMiningRunning");
+    return (jboolean) is_running();
+}
+
+extern "C"
 JNIEXPORT jint
 JNICALL
 Java_com_example_ottylab_bitzenyminer_MainActivity_startMining(

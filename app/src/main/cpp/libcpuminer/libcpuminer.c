@@ -1357,6 +1357,17 @@ int init(void(*cb)(const char *format, va_list arg)) {
 	return 0;
 }
 
+int is_running() {
+	if (thr_info)  {
+		for (int i = 0; i < opt_n_threads + 3; i++) {
+			if (thr_info[i].run == 1) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
 int start(const char *url, const char *user, const char *pass) {
 	struct thr_info *thr;
 	long flags;
@@ -1367,14 +1378,10 @@ int start(const char *url, const char *user, const char *pass) {
 	rpc_pass = strdup(pass);
 
 	pthread_mutex_lock(&run_lock);
-   	if (thr_info)  {
-		for (int i = 0; i < opt_n_threads + 3; i++)		 {
-			if (thr_info[i].run == 1) {
-				applog(LOG_INFO, "already running: thr_info[%d].pth=%lld", i, thr_info[i].pth);
-				pthread_mutex_unlock(&run_lock);
-                return 0;
-			}
-		}
+    if (is_running()) {
+		applog(LOG_INFO, "already running: thr_info[%d].pth=%lld", i, thr_info[i].pth);
+		pthread_mutex_unlock(&run_lock);
+		return 0;
 	}
 
 	flags = !opt_benchmark && strncmp(rpc_url, "https:", 6)

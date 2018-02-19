@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         textViewLog.setMovementMethod(new ScrollingMovementMethod());
 
         restoreSetting();
+        changeState(isMiningRunning());
     }
 
     private void changeState(boolean running) {
@@ -149,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
         editTextPassword.setText(pref.getString("password", null));
     }
 
-
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+    public native boolean isMiningRunning();
     public native int startMining(String url, String user, String password);
     public native int stopMining();
 }
