@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
     public native boolean isMiningRunning();
     public native int startMining(String url, String user, String password);
     public native int stopMining();
