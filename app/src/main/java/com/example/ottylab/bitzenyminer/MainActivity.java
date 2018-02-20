@@ -10,6 +10,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextUser;
     private EditText editTextPassword;
     private Button buttonDrive;
+    private CheckBox checkBoxBenchmark;
     private TextView textViewLog;
 
     private boolean running;
@@ -104,16 +106,22 @@ public class MainActivity extends AppCompatActivity {
                     stopMining();
                 } else {
                     Log.d("Java", "start");
-                    startMining(
-                        editTextServer.getText().toString(),
-                        editTextUser.getText().toString(),
-                        editTextPassword.getText().toString());
+                    if (checkBoxBenchmark.isChecked()) {
+                        startBenchmark();
+                    } else {
+                        startMining(
+                                editTextServer.getText().toString(),
+                                editTextUser.getText().toString(),
+                                editTextPassword.getText().toString());
+                    }
                 }
 
                 changeState(!running);
                 storeSetting();
             }
         });
+
+        checkBoxBenchmark = (CheckBox) findViewById(R.id.checkBoxBenchmark);
 
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         textViewLog.setMovementMethod(new ScrollingMovementMethod());
@@ -156,5 +164,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public native boolean isMiningRunning();
     public native int startMining(String url, String user, String password);
+    public native int startBenchmark();
     public native int stopMining();
 }
