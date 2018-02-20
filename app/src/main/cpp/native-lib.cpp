@@ -94,6 +94,16 @@ Java_com_example_ottylab_bitzenyminer_MainActivity_startMining(
 
     return result;
 }
+extern "C"
+JNIEXPORT jint
+JNICALL
+Java_com_example_ottylab_bitzenyminer_MainActivity_startBenchmark(
+        JNIEnv *env,
+        jobject /* this */) {
+    Log("startBenchmark");
+    return start(NULL, NULL, NULL);
+}
+
 
 extern "C"
 JNIEXPORT jint
