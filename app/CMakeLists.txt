@@ -5,9 +5,6 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
-# Include sub directory
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/main/cpp/libcpuminer)
-
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -42,13 +39,56 @@ find_library(
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
+# Prebuilt libraries
+add_library(z STATIC IMPORTED)
+
+set_target_properties(
+    z
+    PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../distribution/zlib/lib/${ANDROID_ABI}/libz.a
+)
+
+add_library(curl STATIC IMPORTED)
+
+set_target_properties(
+    curl
+    PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../distribution/curl/lib/${ANDROID_ABI}/libcurl.a
+)
+
+add_library(jansson STATIC IMPORTED)
+
+set_target_properties(
+    jansson
+    PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../distribution/jansson/lib/${ANDROID_ABI}/libjansson.a
+)
+
+add_library(cpuminer STATIC IMPORTED)
+
+set_target_properties(
+    cpuminer
+    PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../distribution/cpuminer/lib/${ANDROID_ABI}/libcpuminer.a
+)
+
+target_include_directories(
+    native-lib PRIVATE
+    ${CMAKE_SOURCE_DIR}/../distribution/zlib/include
+    ${CMAKE_SOURCE_DIR}/../distribution/curl/include
+    ${CMAKE_SOURCE_DIR}/../distribution/jansson/include
+    ${CMAKE_SOURCE_DIR}/../distribution/cpuminer/include)
+
 target_link_libraries(
     # Specifies the target library.
     native-lib
 
     # Links the target library to the log library
     # included in the NDK.
-    ${log-lib}
 
+    ${log-lib}
     cpuminer
+    curl
+    jansson
+    z
 )

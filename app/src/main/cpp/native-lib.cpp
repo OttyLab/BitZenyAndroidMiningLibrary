@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <android/log.h>
-#include "libcpuminer/libcpuminer.h"
+#include <libcpuminer.h>
 
 #define Log(...) \
     ((void)__android_log_print(ANDROID_LOG_INFO, "native: ", __VA_ARGS__))
