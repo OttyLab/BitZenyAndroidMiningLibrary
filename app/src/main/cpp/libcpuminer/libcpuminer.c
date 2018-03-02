@@ -1325,8 +1325,6 @@ static void signal_handler(int sig) {
 }
 
 int init(void(*cb)(const char *format, va_list arg)) {
-	applog(LOG_INFO, "init");
-
 	vprintf_cb = cb;
 	have_stratum = true;
 
