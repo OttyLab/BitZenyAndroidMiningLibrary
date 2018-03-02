@@ -1325,8 +1325,6 @@ static void signal_handler(int sig) {
 }
 
 int init(void(*cb)(const char *format, va_list arg)) {
-	applog(LOG_INFO, "init");
-
 	vprintf_cb = cb;
 	have_stratum = true;
 
@@ -1373,9 +1371,14 @@ int start(const char *url, const char *user, const char *pass) {
 	long flags;
 	int i;
 
-	rpc_url = strdup(url);
-	rpc_user = strdup(user);
-	rpc_pass = strdup(pass);
+	if (url == NULL) {
+		opt_benchmark = true;
+		have_stratum = false;
+	} else {
+		rpc_url = strdup(url);
+		rpc_user = strdup(user);
+		rpc_pass = strdup(pass);
+	}
 
 	pthread_mutex_lock(&run_lock);
     if (is_running()) {

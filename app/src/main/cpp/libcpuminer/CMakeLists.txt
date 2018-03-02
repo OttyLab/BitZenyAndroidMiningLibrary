@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.4.1)
 
 enable_language(ASM)
 
+set(CMAKE_ASM_FLAGS "-g -O2")
+set(CMAKE_C_FLAGS "-g -O2")
+
 add_definitions(
     -D__STDC_LIMIT_MACROS
     -D__STDC_CONSTANT_MACROS
@@ -11,21 +14,17 @@ add_definitions(
 add_library(
     cpuminer
     STATIC
-    #SHARED
+
     scrypt.c
     scrypt-arm.S
-    #scrypt-x64.S
-    #scrypt-x86.S
+    scrypt-x64.S
+    scrypt-x86.S
     sha2.c
     sha2-arm.S
-    #sha2-x64.S
-    #sha2-x86.S
-    sha256.c
+    sha2-x64.S
+    sha2-x86.S
     util.c
     yescrypt.c
-    yescrypt-best.c
-    yescrypt-opt.c
-    yescrypt-ref.c
     libcpuminer.c
 )
 
