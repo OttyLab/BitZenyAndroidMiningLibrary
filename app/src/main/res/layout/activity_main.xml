@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.ottylab.bitzenyminer.MainActivity">
-
-    <Button
-        android:id="@+id/buttonDrive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Start"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-
-    <TextView
-        android:id="@+id/textViewLog"
-        android:layout_width="match_parent"
-        android:layout_height="255dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:gravity="bottom"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextServer"
@@ -71,13 +49,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
 
-    <CheckBox
-        android:id="@+id/checkBoxBenchmark"
-        android:layout_width="106dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:text="Benchmark"
-        app:layout_constraintStart_toEndOf="@+id/buttonDrive"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonDrive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+        <CheckBox
+            android:id="@+id/checkBoxBenchmark"
+            android:layout_width="106dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Benchmark"
+            app:layout_constraintLeft_toRightOf="@+id/buttonDrive"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewLog"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:gravity="bottom"
+        android:scrollbars="vertical" />
+</LinearLayout>

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity activity = this.activity.get();
             if (activity != null) {
                 String logs = Utils.rotateStringQueue(activity.logs, msg.getData().getString("msg"));
-                activity.textViewLog.setText(logs.toString());
+                activity.textViewLog.setText(logs);
             }
         }
     }
