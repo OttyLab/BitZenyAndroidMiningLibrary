@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextServer;
     private EditText editTextUser;
     private EditText editTextPassword;
+    private EditText editTextNThreads;
     private Button buttonDrive;
     private CheckBox checkBoxBenchmark;
     private TextView textViewLog;
@@ -97,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        editTextNThreads = (EditText) findViewById(R.id.editTextNThreads);
+        editTextNThreads.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                storeSetting();
+            }
+        });
+
         buttonDrive = (Button) findViewById(R.id.buttonDrive);
         buttonDrive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,13 +115,19 @@ public class MainActivity extends AppCompatActivity {
                     stopMining();
                 } else {
                     Log.d("Java", "start");
+                    int n_threads = 0;
+                    try {
+                        n_threads = Integer.parseInt(editTextNThreads.getText().toString());
+                    } catch (NumberFormatException e){}
+
                     if (checkBoxBenchmark.isChecked()) {
-                        startBenchmark();
+                        startBenchmark(n_threads);
                     } else {
                         startMining(
-                                editTextServer.getText().toString(),
-                                editTextUser.getText().toString(),
-                                editTextPassword.getText().toString());
+                            editTextServer.getText().toString(),
+                            editTextUser.getText().toString(),
+                            editTextPassword.getText().toString(),
+                            n_threads);
                     }
                 }
 
@@ -140,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         editTextServer.setEnabled(!running);
         editTextUser.setEnabled(!running);
         editTextPassword.setEnabled(!running);
+        editTextNThreads.setEnabled(!running);
     }
 
     private void storeSetting() {
@@ -148,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("server", editTextServer.getText().toString());
         editor.putString("user", editTextUser.getText().toString());
         editor.putString("password", editTextPassword.getText().toString());
+        editor.putString("n_threads", editTextNThreads.getText().toString());
         editor.commit();
     }
 
@@ -156,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
         editTextServer.setText(pref.getString("server", null));
         editTextUser.setText(pref.getString("user", null));
         editTextPassword.setText(pref.getString("password", null));
+        editTextNThreads.setText(pref.getString("n_threads", null));
     }
 
     /**
@@ -163,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native boolean isMiningRunning();
-    public native int startMining(String url, String user, String password);
-    public native int startBenchmark();
+    public native int startMining(String url, String user, String password, int n_threads);
+    public native int startBenchmark(int n_threads);
     public native int stopMining();
 }
