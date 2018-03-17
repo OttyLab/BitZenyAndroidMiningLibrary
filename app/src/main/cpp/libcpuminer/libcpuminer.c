@@ -1344,8 +1344,6 @@ int init(void(*cb)(const char *format, va_list arg)) {
 #endif
 	if (num_processors < 1)
 		num_processors = 1;
-	if (!opt_n_threads)
-		opt_n_threads = num_processors;
 
 #ifdef HAVE_SYSLOG_H
 	if (use_syslog)
@@ -1366,7 +1364,7 @@ int is_running() {
 	return 0;
 }
 
-int start(const char *url, const char *user, const char *pass) {
+int start(const char *url, const char *user, const char *pass, const int n_threads) {
 	struct thr_info *thr;
 	long flags;
 	int i;
@@ -1379,6 +1377,8 @@ int start(const char *url, const char *user, const char *pass) {
 		rpc_user = strdup(user);
 		rpc_pass = strdup(pass);
 	}
+
+	opt_n_threads = n_threads ? n_threads : num_processors;
 
 	pthread_mutex_lock(&run_lock);
     if (is_running()) {

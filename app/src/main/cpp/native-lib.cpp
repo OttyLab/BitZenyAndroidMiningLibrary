@@ -79,14 +79,15 @@ Java_com_example_ottylab_bitzenyminer_MainActivity_startMining(
         jobject /* this */,
         jstring url,
         jstring user,
-        jstring password) {
+        jstring password,
+        jint n_threads) {
     Log("startMining");
 
     const char *c_url = env->GetStringUTFChars(url, NULL);
     const char *c_user = env->GetStringUTFChars(user, NULL);
     const char *c_password = env->GetStringUTFChars(password, NULL);
 
-    int result = start(c_url, c_user, c_password);
+    int result = start(c_url, c_user, c_password, n_threads);
 
     env->ReleaseStringUTFChars(url, c_url);
     env->ReleaseStringUTFChars(user, c_user);
@@ -99,9 +100,10 @@ JNIEXPORT jint
 JNICALL
 Java_com_example_ottylab_bitzenyminer_MainActivity_startBenchmark(
         JNIEnv *env,
-        jobject /* this */) {
+        jobject /* this */,
+        jint n_threads) {
     Log("startBenchmark");
-    return start(NULL, NULL, NULL);
+    return start(NULL, NULL, NULL, n_threads);
 }
 
 
