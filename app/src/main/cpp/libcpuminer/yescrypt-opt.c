@@ -27,6 +27,12 @@
  * This file was originally written by Colin Percival as part of the Tarsnap
  * online backup system.
  */
+//
+//
+// ottylab update history <ottylab@gmail.com>
+//
+// 2018/03/20 @001 Support KitKat
+//
 
 #ifdef __i386__
 #warning "This implementation does not use SIMD, and thus it runs a lot slower than the SIMD-enabled implementation. Enable at least SSE2 in the C compiler and use yescrypt-best.c instead unless you're building this SIMD-less implementation on purpose (portability to older CPUs or testing)."
@@ -37,6 +43,12 @@
 #include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
+
+//@001 start
+#ifdef KITKAT
+#include <sys/limits.h>
+#endif // KITKAT
+//@001 end
 
 #include "sha256.h"
 #include "sysendian.h"

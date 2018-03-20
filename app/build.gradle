@@ -12,6 +12,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-fexceptions"
+                arguments "-DTARGET=DEFAULT"
             }
         }
         ndk {
@@ -22,6 +23,23 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        kitkat {
+            minSdkVersion 19
+            externalNativeBuild {
+                cmake {
+                    cFlags "-DKITKAT"
+                    arguments "-DTARGET=KITKAT"
+                }
+            }
+            ndk {
+                abiFilters 'armeabi-v7a', 'x86'
+            }
+        }
+        "default" {
         }
     }
     externalNativeBuild {

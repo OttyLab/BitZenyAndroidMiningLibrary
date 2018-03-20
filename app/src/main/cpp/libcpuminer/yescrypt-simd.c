@@ -27,6 +27,12 @@
  * This file was originally written by Colin Percival as part of the Tarsnap
  * online backup system.
  */
+//
+//
+// ottylab update history <ottylab@gmail.com>
+//
+// 2018/03/20 @001 Support KitKat
+//
 
 /*
  * On 64-bit, enabling SSE4.1 helps our pwxform code indirectly, via avoiding
@@ -46,6 +52,12 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+
+//@001 start
+#ifdef KITKAT
+#include <sys/limits.h>
+#endif // KITKAT
+//@001 end
 
 #include "sha256.h"
 #include "sysendian.h"
