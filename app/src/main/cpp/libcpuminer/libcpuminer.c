@@ -21,6 +21,10 @@
 #include <sys/time.h>
 #include <time.h>
 
+#ifdef KITKAT
+#include <sys/limits.h>
+#endif
+
 #ifdef WIN32
 #include <windows.h>
 #else
@@ -68,6 +72,7 @@ static inline void drop_policy(void) {
 #endif
 }
 
+#ifndef KITKAT
 static inline void affine_to_cpu(int id, int cpu) {
 	cpu_set_t set;
 
@@ -75,6 +80,7 @@ static inline void affine_to_cpu(int id, int cpu) {
 	CPU_SET(cpu, &set);
 	sched_setaffinity(0, sizeof(set), &set);
 }
+#endif // KITKAT
 
 #elif defined(__FreeBSD__) /* FreeBSD specific policy and affinity management */
 #include <sys/cpuset.h>
@@ -89,6 +95,7 @@ static inline void affine_to_cpu(int id, int cpu)
     CPU_SET(cpu, &set);
     cpuset_setaffinity(CPU_LEVEL_WHICH, CPU_WHICH_TID, -1, sizeof(cpuset_t), &set);
 }
+
 #endif
 
 enum workio_commands {
@@ -966,10 +973,12 @@ static void *miner_thread(void *userdata) {
 
 	/* Cpu affinity only makes sense if the number of threads is a multiple
 	 * of the number of CPUs */
+#ifndef KITKAT
 	if (num_processors > 1 && opt_n_threads % num_processors == 0) {
 		applog(LOG_INFO, "Binding thread %d to cpu %d", thr_id, thr_id % num_processors);
 		affine_to_cpu(thr_id, thr_id % num_processors);
 	}
+#endif // KITKAT
 
 	if (opt_algo == ALGO_SCRYPT) {
 		scratchbuf = scrypt_buffer_alloc(opt_scrypt_n);
