@@ -16,14 +16,14 @@ public BitZenyMiningLibrary()
 public BitZenyMiningLibrary(Handler handler)
 ```
 
-Library `putString` logs with 'log' tag.
+Library `putString` log strings with 'log' tag. Applications can `getString` then use the log strings.
 
 
 ### Methods
 
 ```
-public native boolean isMiningRunning()
-public native int startMining(String url, String user, String password, int n_threads)
-public native int startBenchmark(int n_threads)
-public native int stopMining()
+public boolean isMiningRunning()
+public int startMining(String url, String user, String password, int n_threads)
+public int startBenchmark(int n_threads)
+public int stopMining()
 ```
