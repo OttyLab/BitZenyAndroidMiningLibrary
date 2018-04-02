@@ -1,0 +1,3 @@
+[submodule "bitzenymininglibrary/src/main/cpp/libcpuminer"]
+	path = bitzenymininglibrary/src/main/cpp/libcpuminer
+	url = git@github.com:OttyLab/cpuminer.git
