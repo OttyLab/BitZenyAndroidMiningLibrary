@@ -35,8 +35,8 @@ android {
             minSdkVersion 19
             externalNativeBuild {
                 cmake {
-                    cFlags "-DKITKAT"
-                    arguments "-DTARGET=KITKAT"
+                    cFlags "-D__KITKAT__"
+                    arguments "-DTARGET=__KITKAT__"
                 }
             }
             ndk {
