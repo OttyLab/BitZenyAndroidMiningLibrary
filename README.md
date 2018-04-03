@@ -27,3 +27,7 @@ public int startMining(String url, String user, String password, int n_threads)
 public int startBenchmark(int n_threads)
 public int stopMining()
 ```
+
+## Tips
+
+Library core uses `git submodule`. Therefore, run `git submodule update` after cloning.
