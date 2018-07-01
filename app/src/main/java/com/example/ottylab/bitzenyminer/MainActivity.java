@@ -1,6 +1,7 @@
 package com.example.ottylab.bitzenyminer;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -48,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             MainActivity activity = this.activity.get();
             if (activity != null) {
-                String logs = Utils.rotateStringQueue(activity.logs, msg.getData().getString("log"));
+                String log = msg.getData().getString("log");
+                String logs = Utils.rotateStringQueue(activity.logs, log);
                 activity.textViewLog.setText(logs);
+                Log.d(TAG, log);
             }
         }
     }
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        showDeviceInfo();
 
         sHandler = new JNICallbackHandler(this);
         miner = new BitZenyMiningLibrary(sHandler);
@@ -101,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (running) {
-                    Log.d("Java", "stop");
+                    Log.d(TAG, "Stop");
                     miner.stopMining();
                 } else {
-                    Log.d("Java", "start");
+                    Log.d(TAG, "Start");
                     int n_threads = 0;
                     try {
                         n_threads = Integer.parseInt(editTextNThreads.getText().toString());
@@ -164,5 +169,17 @@ public class MainActivity extends AppCompatActivity {
         editTextUser.setText(pref.getString("user", null));
         editTextPassword.setText(pref.getString("password", null));
         editTextNThreads.setText(pref.getString("n_threads", null));
+    }
+
+    private void showDeviceInfo() {
+        String[] keys = new String[]{ "os.arch", "os.name", "os.version" };
+        for (String key : keys) {
+            Log.d(TAG, key + ": " + System.getProperty(key));
+        }
+        Log.d(TAG, "CODE NAME: " + Build.VERSION.CODENAME);
+        Log.d(TAG, "SDK INT: " + Build.VERSION.SDK_INT);
+        Log.d(TAG, "MANUFACTURER: " + Build.MANUFACTURER);
+        Log.d(TAG, "MODEL: " + Build.MODEL);
+        Log.d(TAG, "PRODUCT: " + Build.PRODUCT);
     }
 }
