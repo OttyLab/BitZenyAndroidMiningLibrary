@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 if (${ANDROID_ABI} STREQUAL "x86")
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wall -v -Wl,--no-warn-shared-textrel")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}-Wall -v -Wl,--no-warn-shared-textrel")
 endif()
 
 # Include sub directory
