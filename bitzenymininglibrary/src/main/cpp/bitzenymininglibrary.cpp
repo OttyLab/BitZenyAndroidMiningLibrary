@@ -80,14 +80,15 @@ Java_com_example_ottylab_bitzenymininglibrary_BitZenyMiningLibrary_startMining(
         jstring url,
         jstring user,
         jstring password,
-        jint n_threads) {
+        jint n_threads,
+        jint algo) {
     Log("startMining");
 
     const char *c_url = env->GetStringUTFChars(url, NULL);
     const char *c_user = env->GetStringUTFChars(user, NULL);
     const char *c_password = env->GetStringUTFChars(password, NULL);
 
-    int result = start(c_url, c_user, c_password, n_threads);
+    int result = start(c_url, c_user, c_password, n_threads, algo);
 
     env->ReleaseStringUTFChars(url, c_url);
     env->ReleaseStringUTFChars(user, c_user);
@@ -101,9 +102,10 @@ JNICALL
 Java_com_example_ottylab_bitzenymininglibrary_BitZenyMiningLibrary_startBenchmark(
         JNIEnv *env,
         jobject /* this */,
-        jint n_threads) {
+        jint n_threads,
+        jint algo = 0) {
     Log("startBenchmark");
-    return start(NULL, NULL, NULL, n_threads);
+    return start(NULL, NULL, NULL, n_threads, algo);
 }
 
 

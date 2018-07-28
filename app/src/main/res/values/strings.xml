@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BitZenyMiner</string>
+    <string-array name="algorithms">
+        <item>yescrypt</item>
+        <item>yespower</item>
+    </string-array>
 </resources>

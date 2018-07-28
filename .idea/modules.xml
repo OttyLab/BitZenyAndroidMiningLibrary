@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BitZenyAndroidMiningLibrary.iml" filepath="$PROJECT_DIR$/BitZenyAndroidMiningLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/BitZenyMiner.iml" filepath="$PROJECT_DIR$/BitZenyMiner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bitzenymininglibrary/bitzenymininglibrary.iml" filepath="$PROJECT_DIR$/bitzenymininglibrary/bitzenymininglibrary.iml" />
     </modules>
   </component>
 </project>

@@ -11,11 +11,37 @@ public class BitZenyMiningLibrary {
         System.loadLibrary("bitzenymininglibrary");
     }
 
+    public enum Algorithm {
+        YESCRYPT,
+        YESPOWER,
+    }
+
     private static Handler sHandler;
 
     public BitZenyMiningLibrary() {}
     public BitZenyMiningLibrary(Handler handler) {
         sHandler = handler;
+    }
+    public int startMining(String url, String user, String password, int n_threads, Algorithm algo) {
+        switch (algo) {
+            case YESCRYPT:
+                return startMining(url, user, password, n_threads, 0);
+            case YESPOWER:
+                return startMining(url, user, password, n_threads, 1);
+            default:
+                return -1;
+        }
+    }
+
+    public int startBenchmark(int n_threads, Algorithm algo) {
+        switch (algo) {
+            case YESCRYPT:
+                return startBenchmark(n_threads, 0);
+            case YESPOWER:
+                return startBenchmark(n_threads, 1);
+            default:
+                return -1;
+        }
     }
 
     private static void output(String message) {
@@ -31,7 +57,7 @@ public class BitZenyMiningLibrary {
     }
 
     public native boolean isMiningRunning();
-    public native int startMining(String url, String user, String password, int n_threads);
-    public native int startBenchmark(int n_threads);
     public native int stopMining();
+    private native int startMining(String url, String user, String password, int n_threads, int algo);
+    private native int startBenchmark(int n_threads, int algo);
 }
