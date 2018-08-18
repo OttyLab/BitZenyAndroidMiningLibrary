@@ -87,6 +87,13 @@
             android:text="Benchmark"
             app:layout_constraintLeft_toRightOf="@+id/editTextNThreads"
             app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+        <Spinner
+            android:id="@+id/spinnerAlgorithm"
+            android:layout_width="116dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 
     <TextView
